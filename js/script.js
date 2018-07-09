@@ -68,8 +68,8 @@ function start() {
 };
 
 
-$('.student-search').on('click', 'button', function(){
-	let $input_val = $('.student-search input').val();
+$('.student-search input').on("keyup", function(){
+	let $input_val = $(this).val();
 	console.log($input_val);
 	$('.student-list p').remove();
 	$('#ul_paginate li').remove();
