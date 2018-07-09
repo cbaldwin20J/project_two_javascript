@@ -2,6 +2,15 @@ $(document).ready(function () {
 
 
 
+function add_search() {
+	$('.page-header').append(
+		`<div class="student-search">
+          <input placeholder="Search for students...">
+          <button>Search</button>
+        </div>`);
+}
+
+add_search();
 
 function paginate(num) {
 	console.log("num2: " + num);
@@ -79,9 +88,11 @@ $('.student-search').on('click', 'button', function(){
 	let ifNone = 0;
 	$('.student-list li').each(function() {
 		let $str = $("h3", this).text();
+		let $stremail = $("span", this).text();
 		let $iftrue = $str.search($input_val);
+		let $iftrue2 = $stremail.search($input_val);
 
-		if ($iftrue > -1) {
+		if ($iftrue > -1 || $iftrue2 > -1) {
 			$(this).addClass('search');
 			ifNone += 1;
 		};
