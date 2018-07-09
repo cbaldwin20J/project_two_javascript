@@ -9,11 +9,19 @@ function paginate(num) {
 	$('.student-list p').remove();
 	let count = 0;
 	let start = (num -1) * 10;
+	if ($('.student-list li.search').length > 0) {
+		while (count < 10) {
+			$('.student-list li.search').eq(start).show();
+			count += 1;
+			start += 1;
+		}
+	}else {
 	while (count < 10) {
-		$('li').eq(start).show();
+		$('.student-list li').eq(start).show();
 		count += 1;
 		start += 1;
 	};
+};
 	the_num = num - 1;
 	$('#ul_paginate li a.active').removeClass('active');
 	$('#ul_paginate li a').eq(the_num).addClass('active');
@@ -54,21 +62,24 @@ function start() {
 $('.student-search').on('click', 'button', function(){
 	let $input_val = $('.student-search input').val();
 	console.log($input_val);
+	$('.student-list p').remove();
+	$('#ul_paginate li').remove();
+	$('.student-list li.search').removeClass('search');
+
+
 	if (!$input_val){
 		start();
 		return;
 	}
 
 	$('.student-list li').hide();
-	$('.student-list p').remove();
-	$('.student-list li.search').removeClass('search');
+	
 
 	
 	let ifNone = 0;
 	$('.student-list li').each(function() {
 		let $str = $("h3", this).text();
 		let $iftrue = $str.search($input_val);
-		let ifNone = 0;
 
 		if ($iftrue > -1) {
 			$(this).addClass('search');
@@ -83,11 +94,23 @@ $('.student-search').on('click', 'button', function(){
 			'for: ' + $input_val + ".</p>");
 	}else {
 		search_index(1);
+		let $amount_of_lis = $('ul li.search').length;
+
+		let num_of_buttons = Math.ceil($amount_of_lis/10);
+
+		for (let i=1; i<=num_of_buttons; i+=1) {
+			console.log("in the for loop for paginate");
+			$('#ul_paginate').append("<li>" +
+            	"<a href='#'>" + i + "</a>" +
+          		"</li>&nbsp;")
+			};
+
+	$('#ul_paginate li a').eq(0).addClass('active');
+	paginate(1);
 	
 	}
 
-	$('#ul_paginate li a.active').removeClass('active');
-	$('#ul_paginate li a').eq(0).addClass('active');
+	
 
 
 
